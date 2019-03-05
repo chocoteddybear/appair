@@ -1,22 +1,26 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-
-// HTTP request
+import React, { Component } from "react";
+import logo from "./logo.svg";
+import "./App.css";
 
 const path = "http://35.225.146.132:3000/api/chat/list";
 
-componentDidMount() {
+class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      list: []
+    };
+  }
+
+  componentDidMount() {
     const options = {
       method: "GET",
-      body: JSON.stringify(item),
       headers: new Headers({
         "Content-Type": "application/json",
-        "Authorization": "b32f9a44-151b-46ed-8cba-1eaeb58360df",
-        "cache-control": "no-cache",
-      }),
-      mode: 'no-cors'
-    }
+        Authorization: "b32f9a44-151b-46ed-8cba-1eaeb58360df",
+        "cache-control": "no-cache"
+      })
+    };
 
     return fetch(path, options)
       .then(response => response.json())
@@ -25,15 +29,6 @@ componentDidMount() {
           list
         });
       });
-      .catch(error => console.error(`Error: ${error}`));
-}
-
-class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      list: []
-    }
   }
 
   render() {
