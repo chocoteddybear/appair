@@ -25,7 +25,6 @@ export default class Passengers extends React.Component {
     return fetch(path, options)
       .then(response => response.json())
       .then(passengersOnlineList => {
-        console.log(passengersOnlineList);
         this.setState({
           passengersOnlineList
         });

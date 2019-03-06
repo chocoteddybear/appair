@@ -10,7 +10,6 @@ export default class PassengersChat extends React.Component {
     this.state = {
       chatList: []
     };
-    console.log(this.props.fetchOptions);
   }
 
   componentDidMount() {
