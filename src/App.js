@@ -1,46 +1,47 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
 import "./App.css";
+import PassengersChat from "./components/PassengersChat";
+import PassengersOnline from "./components/PassengersOnline";
+import Header from "./components/Header";
 
-const path = "http://35.225.146.132:3000/api/chat/list";
+const serverUrl = "http://35.225.146.132:3000";
 
 class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      list: []
-    };
+  abbreviation(fullName) {
+    const abbreviation = fullName.split(" ");
+    return abbreviation.map(x => x[0].toUpperCase());
   }
 
-  componentDidMount() {
-    const options = {
-      method: "GET",
-      headers: new Headers({
-        "Content-Type": "application/json",
-        Authorization: "b32f9a44-151b-46ed-8cba-1eaeb58360df",
-        "cache-control": "no-cache"
-      })
+  avatar(imageURL) {
+    const avatarStyle = {
+      backgroundColor: "transparent",
+      backgroundImage: "url(" + serverUrl + imageURL + ")"
     };
-
-    return fetch(path, options)
-      .then(response => response.json())
-      .then(list => {
-        this.setState({
-          list
-        });
-      });
+    if (imageURL) {
+      return avatarStyle;
+    } else {
+      return "";
+    }
   }
 
   render() {
-    console.log(this.state.list);
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-        </header>
+        <Header />
+        <main className="main-content">
+          <PassengersOnline
+            serverUrl={serverUrl}
+            abbreviation={this.abbreviation}
+            avatar={this.avatar}
+          />
+          <div className="passengers-chats">
+            <PassengersChat
+              serverUrl={serverUrl}
+              abbreviation={this.abbreviation}
+              avatar={this.avatar}
+            />
+          </div>
+        </main>
       </div>
     );
   }
